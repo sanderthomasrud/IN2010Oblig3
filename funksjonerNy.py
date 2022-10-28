@@ -76,33 +76,11 @@ class IMBDGraph:
             self.totalEdges += len(edgeList) # legger til antall kanter til totalen
             self.totalNodes += 1 # legger til en node til totalen
 
-        # print(f"Oppgave 1\n")
-        # print(f"Antall noder: {self.totalNodes}")
-        # print(f"Antall kanter: {self.totalEdges / 2}")
+        print(f"Oppgave 1\n")
+        print(f"Antall noder: {self.totalNodes}")
+        print(f"Antall kanter: {round(self.totalEdges / 2)}\n")
 
 
-    # def BFSFull(self):
-    #     visited = {}
-
-    #     for node in self.graph:
-    #         if node not in visited:
-    #             self.BFSVisit(node, visited)
-
-    #     # for i in visited:
-    #     #     print(f"{i}: {visited[i]} \n")
-    
-
-    # def BFSVisit(self, s, visited):
-    #     queue = [s]
-
-    #     while queue is not empty:
-    #         u = queue.clear()
-    #         for edge in self.graph[s]:
-    #             if edge[0] not in visited:
-    #                 queue.append(edge[0])
-    #                 visited.add(s)
-
-    #     print(queue)
 
     def test(self, str1, str2):
         self.findPath(self.allActors[str1], self.allActors[str2])
@@ -115,22 +93,25 @@ class IMBDGraph:
 
         paths = {}
         paths[startActor] = []
+        visited.add(startActor)
 
         while len(queue) > 0:
             u = queue.pop(0) # henter ut det første elementet i køen
-            # print(u)
             for edge in self.graph[u]:
                 if edge[0] not in visited:
                     queue.append(edge[0])
                     visited.add(edge[0])
-                    print(f"{u}:{paths[u]}")
+
+                    lst1 = paths[u].copy()
+                    paths[edge[0]] = lst1
+                    lst1.append((u, edge[1])) # HVER GANG DEN ITERERER GJENNOM FOR-LOOPEN, LEGGER DEN TIL ETT ELEMENT I DEN SAMME LISTEN, SOM KOPIERES
 
 
-                    paths[edge[0]] = paths[u]
-                    paths[edge[0]].append((u, edge[1])) # HVER GANG DEN ITERERER GJENNOM FOR-LOOPEN, LEGGER DEN TIL ETT ELEMENT I DEN SAMME LISTEN, SOM KOPIERES
+        for step in paths[endActor]:
+            print(f"{step[0]}\n=== [ {step[1]} ({step[1].rating}) ===>", end = " ")
 
-        # for element in paths:
-        #     print(f"{element} ++++++++ {paths[element]}\n")
+        print(f"{endActor}\n")
+            
 
         
 
