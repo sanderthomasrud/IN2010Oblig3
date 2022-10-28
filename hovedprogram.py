@@ -2,7 +2,11 @@ from funksjonerNy import IMBDGraph
 
 graph = IMBDGraph()
 
+# Oppgave 1
+
 graph.makeGraph("inputs/movies.tsv", "inputs/actors.tsv")
+
+# Oppgave 2
 
 # graph.test("nm0000313", "nm0001745") # Jeff Bridges -> Stellan Skarsgård # tester i den lille grafen
 
