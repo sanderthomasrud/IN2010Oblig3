@@ -26,11 +26,21 @@ class Actor:
     def __repr__(self):
         return self.name
 
+class Edge:
+    def __init__(self, actor, movie):
+        self.actor = actor
+        self.movie = movie
+    def __lt__(self, other):
+        return float(self.movie.rating) < float(other.movie.rating)
+    
+    def __str__(self):
+        return f"({self.actor}, {self.movie})"
+
 class IMBDGraph:
     def __init__ (self):
         self.allMovies = {} # tt som key, Movie-objekt som value
         self.allActors = {} # nm som key, Actor-objekt som value
-        self.graph = {} # Actor-objekt som key, liste med pairs som value
+        self.graph = {} # Actor-objekt som key, liste med kanter som value
         self.totalNodes = 0
         self.totalEdges = 0
 
@@ -71,16 +81,17 @@ class IMBDGraph:
             for movie in thisActor.movies: # går gjennom denne skuespillerens filmer
                 for otherActor in movie.actors: # går gjennom denne filmens skuespillere
                     if otherActor != thisActor:
-                        edge = (otherActor, movie) # danner et par av skuespilleren, og filmen de har spilt sammen i
+                        edge = Edge(otherActor, movie) # danner et par av skuespilleren, og filmen de har spilt sammen i
                         edgeList.append(edge) # legger paret til på listen over kanter
             
             self.graph[thisActor] = edgeList # legger til kantlisten
             self.totalEdges += len(edgeList) # legger til antall kanter til totalen
             self.totalNodes += 1 # legger til en node til totalen
 
-        print(f"Oppgave 1\n")
-        print(f"Antall noder: {self.totalNodes}")
-        print(f"Antall kanter: {round(self.totalEdges / 2)}\n")
+        # dette må legges i en egen funksjon
+        # print(f"Oppgave 1\n")
+        # print(f"Antall noder: {self.totalNodes}")
+        # print(f"Antall kanter: {round(self.totalEdges / 2)}\n")
 
 
 
@@ -98,42 +109,59 @@ class IMBDGraph:
         visited.add(startActor)
 
         while len(queue) > 0:
-            u = queue.pop(0) # henter ut det første elementet i køen
+            u = queue.pop(0) # popping the first element in queue
             for edge in self.graph[u]:
-                if edge[0] not in visited:
-                    queue.append(edge[0])
-                    visited.add(edge[0])
+                if edge.actor not in visited:
+                    queue.append(edge.actor)
+                    visited.add(edge.actor)
 
                     lst1 = paths[u].copy()
-                    paths[edge[0]] = lst1
-                    lst1.append((u, edge[1])) 
+                    paths[edge.actor] = lst1
+                    lst1.append(Edge(u, edge.movie)) 
             
             if endActor in visited:
                 break
 
         for step in paths[endActor]:
-            print(f"{step[0]}\n=== [ {step[1]} ({step[1].rating}) ===>", end = " ")
+            print(f"{step.actor}\n=== [ {step.movie} ({step.movie.rating}) ===>", end = " ")
 
         print(f"{endActor}\n")
 
-    def findChillestPath(self, startActor, endActor):
-        startActor, endActor = self.allActors[startActor], self.allActors[endActor]
+    def chillestPath(self, str1, str2):
+        D = self.findChillestPath(self.allActors[str1], self.allActors[str2])
 
+    def findChillestPath(self, startActor, endActor): # legge til små optimaliseringer for å gjøre den raskere: visited-set, og if test om rating > D[actor]       
         Q = [(0, startActor)]
         D = defaultdict(lambda: float('inf'))
         D[startActor] = 0
+        paths = {}
+        paths[startActor] = [] 
 
         while Q:
-            cost, v = heappop(Q)
-            for u in E[v]:
-                c = cost + w[(v, u)]
-                if c < D[u]:
-                    D[u] = c
-                    heappush(Q, (c, u))
-
-        return D
-
+            # path = []
+            rating, actor = heappop(Q)
+            if isinstance(actor, Edge):
+                actor = actor.actor
             
+            for edge in self.graph[actor]:
+                # path.append(edge)
+                weight = rating + (10.0 - float(edge.movie.rating))
+                if weight < D[edge.actor]:
+                    
+                    lst1 = paths[actor].copy()
+                    paths[edge.actor] = lst1
+                    lst1.append(Edge(actor, edge.movie)) 
+
+                    D[edge.actor] = weight
+                    heappush(Q, (weight, edge)) # cannot get heap to sort on weight              
+            # paths.append(path)
+
+        for step in paths[endActor]:
+            print(f"{step.actor}\n=== [ {step.movie} ({step.movie.rating}) ===>", end = " ")
+
+        print(f"{endActor}")
+        print(f"Total weight: {D[endActor]}\n")
+        return D
 
         
 
