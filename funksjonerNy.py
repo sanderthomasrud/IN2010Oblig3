@@ -1,8 +1,10 @@
 
 
 from asyncio import queues
+from collections import defaultdict
 from tracemalloc import start
 from numpy import empty
+from heapq import heappop, heappush
 
 
 class Movie:
@@ -82,7 +84,7 @@ class IMBDGraph:
 
 
 
-    def test(self, str1, str2):
+    def findShortestPath(self, str1, str2):
         self.findPath(self.allActors[str1], self.allActors[str2])
 
 
@@ -104,13 +106,33 @@ class IMBDGraph:
 
                     lst1 = paths[u].copy()
                     paths[edge[0]] = lst1
-                    lst1.append((u, edge[1])) # HVER GANG DEN ITERERER GJENNOM FOR-LOOPEN, LEGGER DEN TIL ETT ELEMENT I DEN SAMME LISTEN, SOM KOPIERES
-
+                    lst1.append((u, edge[1])) 
+            
+            if endActor in visited:
+                break
 
         for step in paths[endActor]:
             print(f"{step[0]}\n=== [ {step[1]} ({step[1].rating}) ===>", end = " ")
 
         print(f"{endActor}\n")
+
+    def findChillestPath(self, startActor, endActor):
+        startActor, endActor = self.allActors[startActor], self.allActors[endActor]
+
+        Q = [(0, startActor)]
+        D = defaultdict(lambda: float('inf'))
+        D[startActor] = 0
+
+        while Q:
+            cost, v = heappop(Q)
+            for u in E[v]:
+                c = cost + w[(v, u)]
+                if c < D[u]:
+                    D[u] = c
+                    heappush(Q, (c, u))
+
+        return D
+
             
 
         
