@@ -7,8 +7,8 @@ Hvilke algoritmer er benyttet:
 Kommentar på kjøretiden:
 
 
-Oppgave 1:
+Andre kommentarer:
 
-Kjører som den skal, men måten vi har implementert innebærer at hver skuespiller har en liste over alle skuespillerene hen er linket til, og 
+Oppgave 1 kjører som den skal, men måten vi har implementert innebærer at hver skuespiller har en liste over alle skuespillerene hen er linket til, og 
 dermed vil hver kant telles to ganger. Derfor deler vi tallet på 2, for å få det riktige tallet. 
 
