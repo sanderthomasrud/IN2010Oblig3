@@ -163,5 +163,50 @@ class IMBDGraph:
         print(f"Total weight: {D[endActor]}\n")
         return D
 
+    def countNodesInComponents(self):
+        componentsDict = self.DFSFull()
+        sortedComponents = sorted(componentsDict.items(), key=lambda x: x[0], reverse=True)
+
+        for comp in sortedComponents:
+            print(f"There are {comp[1]} components of size {comp[0]}")
+    
+    def DFSVisit(self, node, visited, counter):
+        stack = [node]
+        while stack:
+            u = stack.pop()
+            if u not in visited:
+                counter += 1
+                visited.add(u)
+                for kant in self.graph[u]:
+                    stack.append(kant.actor)
+        
+        return counter
+
+        # visited.add(node)
+        # counter += 1
+        # for kant in self.graph[node]:
+        #     if kant.actor not in visited: 
+        #         counter = self.DFSVisit(kant.actor, visited, counter)
+
+        # return counter
+
+    
+    def DFSFull(self):
+        visited = set()
+        components = {}
+
+        for actor in self.graph:
+            if actor not in visited:
+                counter = 0
+                counter = self.DFSVisit(actor, visited, counter)
+                if counter not in components:
+                    components[counter] = 1
+                else:
+                    components[counter] += 1
+        return components
+
+
+
+
         
 
