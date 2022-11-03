@@ -89,9 +89,9 @@ class IMBDGraph:
             self.totalNodes += 1 # legger til en node til totalen
 
         # dette må legges i en egen funksjon
-        # print(f"Oppgave 1\n")
-        # print(f"Antall noder: {self.totalNodes}")
-        # print(f"Antall kanter: {round(self.totalEdges / 2)}\n")
+        print(f"Oppgave 1\n")
+        print(f"Antall noder: {self.totalNodes}")
+        print(f"Antall kanter: {round(self.totalEdges / 2)}\n")
 
 
 
@@ -133,28 +133,27 @@ class IMBDGraph:
     def findChillestPath(self, startActor, endActor): # legge til små optimaliseringer for å gjøre den raskere: visited-set, og if test om rating > D[actor]       
         Q = [(0, startActor)]
         D = defaultdict(lambda: float('inf'))
+
         D[startActor] = 0
         paths = {}
         paths[startActor] = [] 
 
         while Q:
-            # path = []
             rating, actor = heappop(Q)
             if isinstance(actor, Edge):
                 actor = actor.actor
             
-            for edge in self.graph[actor]:
-                # path.append(edge)
-                weight = rating + (10.0 - float(edge.movie.rating))
-                if weight < D[edge.actor]:
-                    
-                    lst1 = paths[actor].copy()
-                    paths[edge.actor] = lst1
-                    lst1.append(Edge(actor, edge.movie)) 
+            if rating <= D[actor]:
+                for edge in self.graph[actor]:
+                    weight = rating + (10.0 - float(edge.movie.rating))
+                    if weight < D[edge.actor]:
+                        
+                        lst1 = paths[actor].copy()
+                        paths[edge.actor] = lst1
+                        lst1.append(Edge(actor, edge.movie)) 
 
-                    D[edge.actor] = weight
-                    heappush(Q, (weight, edge)) # cannot get heap to sort on weight              
-            # paths.append(path)
+                        D[edge.actor] = weight
+                        heappush(Q, (weight, edge)) # cannot get heap to sort on weight              
 
         for step in paths[endActor]:
             print(f"{step.actor}\n=== [ {step.movie} ({step.movie.rating}) ===>", end = " ")
