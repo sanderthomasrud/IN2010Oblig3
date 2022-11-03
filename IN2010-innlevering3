@@ -11,7 +11,8 @@ I oppgave 4 brukt vi dybde-først-søk, som finner alle nodene i komponenten. De
 
 Kommentar på kjøretiden:
 
-
+Vi skriver ut den totale kjøretiden etter programmet er ferdig å kjøre, og den ligger mellom 33 og 35 sekunder. Det tar rundt 10 sekunder å lage
+grafen, mens resten av tiden brukes på å finne den chilleste stien. De andre oppgavene brukes tilnærmet lik 0 sekunder. 
 
 Andre kommentarer:
 
