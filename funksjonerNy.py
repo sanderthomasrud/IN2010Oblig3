@@ -95,7 +95,6 @@ class IMBDGraph:
         print(f"Antall kanter: {round(self.totalEdges / 2)}\n")
 
 
-
     def findShortestPath(self, str1, str2):
         self.findPath(self.allActors[str1], self.allActors[str2])
 
