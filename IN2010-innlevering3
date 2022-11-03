@@ -5,7 +5,9 @@ samme mappe som hovedprogrammet.
 
 Hvilke algoritmer er benyttet:
 
-
+I oppgave 2 har vi brukt bredde-først-søk, som avslutter når sluttnoden er funnet. 
+I oppgave 3 har vi brukt dijkstra-algoritmen.
+I oppgave 4 brukt vi dybde-først-søk, som finner alle nodene i komponenten. Dette kjører vi frem til alle nodene er besøkt, mens vi teller opp.
 
 Kommentar på kjøretiden:
 
