@@ -37,12 +37,13 @@ class Edge:
         return f"({self.actor}, {self.movie})"
 
 class IMBDGraph:
-    def __init__ (self):
+    def __init__ (self, actors, movies):
         self.allMovies = {} # tt som key, Movie-objekt som value
         self.allActors = {} # nm som key, Actor-objekt som value
         self.graph = {} # Actor-objekt som key, liste med kanter som value
         self.totalNodes = 0
         self.totalEdges = 0
+        self.makeGraph(actors, movies)
 
     def readMovies(self, filename):
         file = open(filename)

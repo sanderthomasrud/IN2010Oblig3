@@ -3,8 +3,7 @@ from funksjonerNy import IMBDGraph
 """
 Oppgave 1: Lager grafen
 """
-graph = IMBDGraph()
-graph.makeGraph("input/movies.tsv", "input/actors.tsv")
+graph = IMBDGraph("input/movies.tsv", "input/actors.tsv")
 
 """
 Oppgave 2: Skriver ut raskeste vei mellom to noder, tar ikke hensyn til vekt
