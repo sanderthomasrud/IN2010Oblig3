@@ -1,0 +1,20 @@
+Hvordan kjøre programmet:
+
+Programmet kan enten kjøres gjennom terminalen med kommandoen "python3 innleveringsoppgave3.py", eller gjennom en editor. Vi har lagt inputfilene i 
+samme mappe som hovedprogrammet.
+
+Hvilke algoritmer er benyttet:
+
+I oppgave 2 har vi brukt bredde-først-søk, som avslutter når sluttnoden er funnet. 
+I oppgave 3 har vi brukt dijkstra-algoritmen.
+I oppgave 4 brukt vi dybde-først-søk, som finner alle nodene i komponenten. Dette kjører vi frem til alle nodene er besøkt, mens vi teller opp.
+
+Kommentar på kjøretiden:
+
+
+
+Andre kommentarer:
+
+Oppgave 1 kjører som den skal, men måten vi har implementert innebærer at hver skuespiller har en liste over alle skuespillerene hen er linket til, og 
+dermed vil hver kant telles to ganger. Derfor deler vi tallet på 2, for å få det riktige tallet. 
+
